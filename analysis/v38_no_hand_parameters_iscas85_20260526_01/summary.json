@@ -1,0 +1,20 @@
+{
+  "combined_circuits": 10,
+  "combined_macro_ideal_ratio_raw": 0.8909971101470905,
+  "combined_macro_closure_raw": 0.4300365930501083,
+  "combined_loss_rows": 0,
+  "combined_random_gate_fail": 0,
+  "runtime_total_seconds": 78.45757139999978,
+  "suites": [
+    {
+      "suite": "iscas85",
+      "circuits": 10,
+      "macro_ideal_ratio_raw": 0.8909971101470905,
+      "macro_closure_raw": 0.4300365930501083,
+      "loss_rows": 0,
+      "random_gate_fail": 0,
+      "runtime_seconds": 78.45757139999978
+    }
+  ],
+  "note": "ISCAS89 uses scan-boundary mode with DFF Q as pseudo-PI and DFF D as pseudo-PO."
+}

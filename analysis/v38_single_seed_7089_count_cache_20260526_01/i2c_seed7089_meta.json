@@ -1,0 +1,15 @@
+{
+  "circuit": "i2c",
+  "vector_seed": 7089,
+  "effective_seed": 7343,
+  "vectors": 128,
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "seconds": 0.4292407000029925,
+  "inputs": 147,
+  "outputs": 142,
+  "gates": 1357,
+  "candidate_nodes": 1357,
+  "candidate_coverage": 1357,
+  "cache_hit": false
+}

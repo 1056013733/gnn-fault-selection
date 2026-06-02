@@ -1,0 +1,2 @@
+method,circuits,macro_ideal_ratio_raw,macro_std_over_circuits,loss_rows,random_gate_fail,ideal_ratio_075_circuits
+fusa_supervised_fair_mlp_loco,20,0.6345224140236941,0.2386165643471328,33,20,3

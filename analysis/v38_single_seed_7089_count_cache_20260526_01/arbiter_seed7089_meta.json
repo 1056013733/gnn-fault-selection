@@ -1,0 +1,15 @@
+{
+  "circuit": "arbiter",
+  "vector_seed": 7089,
+  "effective_seed": 7834,
+  "vectors": 128,
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "seconds": 0.1564444999967236,
+  "inputs": 256,
+  "outputs": 129,
+  "gates": 11839,
+  "candidate_nodes": 11711,
+  "candidate_coverage": 11711,
+  "cache_hit": false
+}

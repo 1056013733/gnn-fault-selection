@@ -1,0 +1,33 @@
+{
+  "seed": 7089,
+  "vectors": 128,
+  "configurations": [
+    {
+      "method": "segr_structure_derived_selector",
+      "hidden": 64,
+      "layers": 2
+    },
+    {
+      "method": "segr_l1",
+      "hidden": 64,
+      "layers": 1
+    },
+    {
+      "method": "segr_l3",
+      "hidden": 64,
+      "layers": 3
+    },
+    {
+      "method": "segr_h32",
+      "hidden": 32,
+      "layers": 2
+    },
+    {
+      "method": "segr_h128",
+      "hidden": 128,
+      "layers": 2
+    }
+  ],
+  "oracle": "selected-seed random-vector stuck-at count oracle",
+  "variant_root": "outputs_runs\\v38_architecture_ablation_20260526_01"
+}

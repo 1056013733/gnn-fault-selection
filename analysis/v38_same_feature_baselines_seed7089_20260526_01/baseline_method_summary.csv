@@ -1,0 +1,4 @@
+method,circuits,macro_ideal_ratio_raw,macro_std_over_circuits,loss_rows,random_gate_fail,ideal_ratio_075_circuits
+logistic_regression_same_feature_loco,20,0.6962351109676714,0.19035156162993505,17,20,3
+mlp_same_feature_loco,20,0.6345224140236941,0.2386165643471328,33,20,3
+random_forest_same_feature_loco,20,0.7039033243261218,0.19091614246510988,25,20,2

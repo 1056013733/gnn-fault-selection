@@ -1,0 +1,19 @@
+{
+  "seed": 7089,
+  "vectors": 128,
+  "variants": [
+    "segr_structure_derived_selector",
+    "no_gnn",
+    "gnn_only",
+    "shuffled_gnn",
+    "pure_static_proximity",
+    "cache_structural_only",
+    "structural_family_only"
+  ],
+  "oracle": "selected-seed random-vector stuck-at count oracle",
+  "notes": {
+    "no_gnn": "0.50 static_rank + 0.35 cache_struct_rank + 0.15 family_score; no gnn_rank/final_score.",
+    "shuffled_gnn": "gnn_rank values are deterministically shuffled within each circuit.",
+    "structural_family_only": "fixed structural heuristic from distance, reconvergence, fanout, and PageRank features; no gnn_rank/final_score."
+  }
+}

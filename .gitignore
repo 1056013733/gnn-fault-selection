@@ -1,0 +1,21 @@
+﻿__pycache__/
+*.py[cod]
+*.log
+*.out
+*.exe
+*.pt
+*.pth
+*.onnx
+*.baiduyun.uploading.cfg
+
+handoff/
+external/
+sim_logs/
+runtime_addendum/
+backups/
+.venv/
+venv/
+
+# Regenerate with scripts/build_rank_diagnostics.py when needed.
+analysis/*/fig4_rank_percentiles_long.csv
+.pytest_cache/

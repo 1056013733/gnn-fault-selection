@@ -1,0 +1,15 @@
+{
+  "circuit": "bar",
+  "vector_seed": 7089,
+  "effective_seed": 7398,
+  "vectors": 128,
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "seconds": 0.047272900003008544,
+  "inputs": 135,
+  "outputs": 128,
+  "gates": 3336,
+  "candidate_nodes": 3208,
+  "candidate_coverage": 3208,
+  "cache_hit": false
+}

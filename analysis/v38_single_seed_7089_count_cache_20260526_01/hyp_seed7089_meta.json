@@ -1,0 +1,12 @@
+{
+  "circuit": "hyp",
+  "vector_seed": 7089,
+  "vectors": 128,
+  "count_mode": "opposite_flip",
+  "candidate_nodes": 214207,
+  "shard_count": 8,
+  "seconds": 8163.517032200034,
+  "wall_seconds": 2331.326775499998,
+  "cache_hit": false,
+  "sharded": true
+}

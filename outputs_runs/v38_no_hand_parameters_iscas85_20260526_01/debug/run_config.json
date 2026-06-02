@@ -1,0 +1,31 @@
+{
+  "bench_root": "data\\external_benchmarks",
+  "output": "outputs_runs\\v38_no_hand_parameters_iscas85_20260526_01\\results.csv",
+  "debug_dir": "outputs_runs\\v38_no_hand_parameters_iscas85_20260526_01\\debug",
+  "perf": "outputs_runs\\v38_no_hand_parameters_iscas85_20260526_01\\perf.csv",
+  "analysis_dir": "analysis\\v38_no_hand_parameters_iscas85_20260526_01",
+  "vectors": 128,
+  "vector_seed": 5089,
+  "random_samples": 1000,
+  "random_seed": 85289,
+  "device": "cuda",
+  "epochs": 30,
+  "hidden": 64,
+  "layers": 2,
+  "dropout": 0.1,
+  "train_node_cap": 8192,
+  "seed": 123,
+  "only": [
+    "c432",
+    "c499",
+    "c880",
+    "c1355",
+    "c1908",
+    "c2670",
+    "c3540",
+    "c5315",
+    "c6288",
+    "c7552"
+  ],
+  "limit": 0
+}

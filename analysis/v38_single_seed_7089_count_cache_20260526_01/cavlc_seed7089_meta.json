@@ -1,0 +1,15 @@
+{
+  "circuit": "cavlc",
+  "vector_seed": 7089,
+  "effective_seed": 7610,
+  "vectors": 128,
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "seconds": 0.008808999991742894,
+  "inputs": 10,
+  "outputs": 11,
+  "gates": 693,
+  "candidate_nodes": 682,
+  "candidate_coverage": 682,
+  "cache_hit": false
+}

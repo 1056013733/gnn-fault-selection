@@ -1,0 +1,11 @@
+suite,circuit,circuit_ideal_ratio_raw_mean,circuit_closure_raw_mean,loss_rows,random_gate,random_passed,chosen_family,family_reason
+iscas85,c1355,0.9663825757575758,0.6883914856265086,0,0.5,True,pdom_dist,relative-pdom-static-aligned
+iscas85,c1908,0.8033740296979375,0.0,0,0.5,True,dist_avg_inv,relative-distance-dominance
+iscas85,c2670,0.9255288873262875,0.3333333333333333,0,0.5,True,dist_avg_inv,relative-distance-dominance
+iscas85,c3540,0.6747288522738402,0.0,0,0.5,True,dist_avg_inv,relative-distance-dominance
+iscas85,c432,0.930253085317623,0.3333333333333333,0,0.5,True,dist_avg_inv,relative-distance-dominance
+iscas85,c499,1.0,1.0,0,0.5,True,pdom_dist,relative-pdom-static-aligned
+iscas85,c5315,0.8544930411863656,0.3333333333333333,0,0.5,True,dist_avg_inv,relative-distance-dominance
+iscas85,c6288,0.9929676738980716,0.9453077782079077,0,0.8951322367854683,True,mass_balance,relative-distance-regular-array
+iscas85,c7552,0.7753652503854979,0.0,0,0.5,True,dist_avg_inv,relative-distance-dominance
+iscas85,c880,0.9868777056277056,0.6666666666666666,0,0.5876487342952187,True,pdom_dist,relative-pdom-static-aligned

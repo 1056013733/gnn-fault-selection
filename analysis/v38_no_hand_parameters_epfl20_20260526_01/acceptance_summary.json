@@ -1,0 +1,46 @@
+{
+  "version": "v38_no_hand_parameters_structure_derived_selector",
+  "selector_mode": "runtime_visible_structural_effective_dimension",
+  "only_selector_changed": true,
+  "uses_gnn": true,
+  "global_ranking": true,
+  "no_fi_or_oracle_or_random_vector_in_selector": true,
+  "removed_public_handwritten_selector_parameters": true,
+  "structure_derived_frontier": true,
+  "frontier_inputs": "runtime-visible non-semantic structural feature ranks excluding schema semantic columns",
+  "adaptive_weights": "positive-alignment + unique-fraction, normalized within circuit",
+  "adaptive_residual_step": "mean positive gap of static rank values within circuit",
+  "epfl20_random_vector_main": {
+    "evidence_source": "current_debug_global_rank",
+    "selected_seed": 7089,
+    "vectors": 128,
+    "macro_ideal_ratio_raw": 0.8143664407170059,
+    "macro_std_over_circuits": 0.14689456546950286,
+    "loss_rows": 0,
+    "random_gate_fail": 0,
+    "static_baseline_macro_ideal_ratio_raw": 0.6678451169158429,
+    "five_seed_macro_mean_over_seeds": 0.818536923534835,
+    "five_seed_loss_rows_total": 0,
+    "five_seed_random_gate_fail_total": 0,
+    "evidence": "Main EPFL20 evidence is evaluated from the current node_debug.csv global_rank/chosen_family outputs for the selected seed; the 5-seed archive is retained only as independent stability evidence."
+  },
+  "epfl20_controlled_fi_regression": {
+    "macro_ideal_ratio": 0.6522585258770781,
+    "loss_rows": 9,
+    "circuits_ge_075": 9,
+    "note": "This is the fixed controlled/FI regression table, not the main random-vector EPFL20 result."
+  },
+  "epfl20_v38": {
+    "macro_ideal_ratio": 0.6522585258770781,
+    "loss_rows": 9,
+    "circuits_ge_075": 9
+  },
+  "iscas85_v38": {
+    "combined_macro_ideal_ratio_raw": 0.8909971101470905,
+    "combined_macro_closure_raw": 0.4300365930501083,
+    "combined_loss_rows": 0,
+    "combined_random_gate_fail": 0,
+    "runtime_total_seconds": 75.67605319999711
+  },
+  "note": "Standalone runners still contain budget/training/evaluation parameters; this v38 change removes hand-written selector fusion/frontier/arbitration thresholds only."
+}

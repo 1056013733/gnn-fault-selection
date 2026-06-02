@@ -1,0 +1,18 @@
+{
+  "suite": "epfl20",
+  "protocol": "epfl_gate_level_random_vector_stuck_at",
+  "protocol_note": "Merged from equivalent shards. Each circuit/seed uses the same fixed random-vector stuck-at protocol as ISCAS'85; sharding only changes offline scheduling.",
+  "circuits": 20,
+  "complete_circuits": 20,
+  "seeds": 5,
+  "vectors": 128,
+  "macro_mean_over_seeds": 0.818536923534835,
+  "macro_std_over_seeds": 0.0010642053923442826,
+  "macro_min_over_seeds": 0.8173462825421538,
+  "macro_max_over_seeds": 0.8200823343310265,
+  "loss_rows_total": 0,
+  "random_gate_fail_total": 0,
+  "runtime_total_seconds": 45874.25559909927,
+  "runtime_note": "offline FI/evaluation wall time summed from shards; not method runtime",
+  "archive_note": "Independent 5-seed EPFL20 random-vector stability archive retained under a clean SEGR directory name. It is not used as a bridge source for the current selected-seed main table."
+}

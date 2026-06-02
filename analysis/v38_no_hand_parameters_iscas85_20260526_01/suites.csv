@@ -1,0 +1,2 @@
+suite,circuits,macro_ideal_ratio_raw,macro_closure_raw,loss_rows,random_gate_fail,runtime_seconds
+iscas85,10,0.8909971101470905,0.4300365930501083,0,0,78.45757139999978

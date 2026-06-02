@@ -1,0 +1,42 @@
+{
+  "root": "data\\Supplementary_Experiments",
+  "fi_root": "full_injection_results_verilator",
+  "circuits": [
+    "adder",
+    "arbiter",
+    "bar",
+    "cavlc",
+    "ctrl",
+    "dec",
+    "div",
+    "hyp",
+    "i2c",
+    "int2float",
+    "log2",
+    "max",
+    "mem_ctrl",
+    "multiplier",
+    "priority",
+    "router",
+    "sin",
+    "sqrt",
+    "square",
+    "voter"
+  ],
+  "budgets": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "output": "outputs_runs\\v38_runtime_no_fi_epfl20_20260601_01\\results.csv",
+  "debug_dir": "outputs_runs\\v38_runtime_no_fi_epfl20_20260601_01\\debug",
+  "perf": "outputs_runs\\v38_runtime_no_fi_epfl20_20260601_01\\perf.csv",
+  "epochs": 30,
+  "hidden": 64,
+  "layers": 2,
+  "dropout": 0.1,
+  "device": "cuda",
+  "train_node_cap": 8192,
+  "seed": 123,
+  "runtime_no_fi": true
+}

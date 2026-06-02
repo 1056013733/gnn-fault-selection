@@ -1,0 +1,21 @@
+{
+  "experiment": "v38_runtime_no_fi_epfl20_20260601_01",
+  "created_at": "2026-06-02T08:56:57",
+  "repo_output_dir": "outputs_runs/v38_runtime_no_fi_epfl20_20260601_01",
+  "analysis_dir": "analysis/v38_runtime_no_fi_epfl20_20260601_01",
+  "runtime_no_fi_config": true,
+  "result_rows": 120,
+  "perf_rows": 20,
+  "all_result_rows_runtime_no_fi_true": true,
+  "all_perf_rows_runtime_no_fi_true": true,
+  "segr_rows": 60,
+  "controlled_macro_fault_instance_nsde": 0.6528017779679095,
+  "controlled_loss_rows_vs_static_prox": 0,
+  "rank_hash_equal_vs_current_v38": 20,
+  "rank_hash_total": 20,
+  "family_equal_vs_current_v38": 20,
+  "family_total": 20,
+  "reason_equal_vs_current_v38": 20,
+  "reason_total": 20,
+  "interpretation": "The runtime-no-FI execution reconstructs EPFL20 rankings with load_fi=False in the ranking path and is compared directly against the current v38 debug outputs. No older rank-hash bridge is used."
+}

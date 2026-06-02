@@ -1,0 +1,15 @@
+{
+  "circuit": "int2float",
+  "vector_seed": 7089,
+  "effective_seed": 8004,
+  "vectors": 128,
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "seconds": 0.012050200006342493,
+  "inputs": 11,
+  "outputs": 7,
+  "gates": 260,
+  "candidate_nodes": 253,
+  "candidate_coverage": 253,
+  "cache_hit": false
+}

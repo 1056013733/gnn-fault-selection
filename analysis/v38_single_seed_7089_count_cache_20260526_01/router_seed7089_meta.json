@@ -1,0 +1,15 @@
+{
+  "circuit": "router",
+  "vector_seed": 7089,
+  "effective_seed": 7762,
+  "vectors": 128,
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "seconds": 0.01194250000116881,
+  "inputs": 60,
+  "outputs": 30,
+  "gates": 284,
+  "candidate_nodes": 254,
+  "candidate_coverage": 254,
+  "cache_hit": false
+}

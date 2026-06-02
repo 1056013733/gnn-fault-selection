@@ -1,0 +1,11 @@
+suite,circuit,mode,nodes,candidate_nodes,edges,pi,po,ff,gates,depth,path,status
+iscas85,c432,combinational,195,160,334,36,7,0,160,17,data\external_benchmarks\iscas85\bench\c432.bench,ok
+iscas85,c499,combinational,242,202,405,41,32,0,202,11,data\external_benchmarks\iscas85\bench\c499.bench,ok
+iscas85,c880,combinational,442,383,723,60,26,0,383,24,data\external_benchmarks\iscas85\bench\c880.bench,ok
+iscas85,c1355,combinational,586,546,1058,41,32,0,546,24,data\external_benchmarks\iscas85\bench\c1355.bench,ok
+iscas85,c1908,combinational,912,880,1496,33,25,0,880,40,data\external_benchmarks\iscas85\bench\c1908.bench,ok
+iscas85,c2670,combinational,1425,1193,2075,233,140,0,1193,32,data\external_benchmarks\iscas85\bench\c2670.bench,ok
+iscas85,c3540,combinational,1718,1669,2928,50,22,0,1669,47,data\external_benchmarks\iscas85\bench\c3540.bench,ok
+iscas85,c5315,combinational,2484,2307,4384,178,123,0,2307,49,data\external_benchmarks\iscas85\bench\c5315.bench,ok
+iscas85,c6288,combinational,2447,2416,4784,32,32,0,2416,124,data\external_benchmarks\iscas85\bench\c6288.bench,ok
+iscas85,c7552,combinational,3718,3512,6141,207,108,0,3512,43,data\external_benchmarks\iscas85\bench\c7552.bench,ok

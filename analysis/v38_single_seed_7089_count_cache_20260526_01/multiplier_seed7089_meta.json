@@ -1,0 +1,15 @@
+{
+  "circuit": "multiplier",
+  "vector_seed": 7089,
+  "effective_seed": 8184,
+  "vectors": 128,
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "seconds": 2.4813501999888103,
+  "inputs": 128,
+  "outputs": 128,
+  "gates": 27062,
+  "candidate_nodes": 26934,
+  "candidate_coverage": 26934,
+  "cache_hit": false
+}

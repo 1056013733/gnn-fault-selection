@@ -1,0 +1,2 @@
+method,circuits,macro_ideal_ratio_raw,macro_std_over_circuits,loss_rows,random_gate_fail,ideal_ratio_075_circuits,vectors,selected_main_seed
+segr_structure_derived_selector,20,0.8143664407170059,0.14689456546950286,0,0,13,128,True

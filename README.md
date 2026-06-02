@@ -45,6 +45,20 @@ The independent 5-seed stability archive is kept under
    - Loss rows: `0`.
    - Random gate failures: `0`.
 
+3. `analysis/v38_missing_comparison_baselines_seed7089_20260602_01/`
+   - Additional reviewer-facing comparison baselines on EPFL20, seed `7089`,
+     128 vectors, and the same 5%, 10%, and 20% prefix budgets.
+   - Includes centrality-only, SCOAP/testability proxy, observability/cone
+     proxy, structural Borda without GNN, and simple static/cache/GNN rank
+     fusion rows.
+   - The SCOAP/testability and observability rows are runtime-visible structural
+     proxies, not external SCOAP-tool measurements.
+   - Strongest proxy row: `scoap_proxy`, macro ideal ratio
+     `0.738807094364821`.
+   - SEGR paired advantage over `scoap_proxy`: mean delta `0.07555934635218495`
+     over 60 circuit-budget rows, bootstrap 95% CI
+     `[0.04699510578742317, 0.10982312964562949]`.
+
 ## Method/Protocol Notes
 
 - One global GNN ranking is fixed per circuit; budgets 5%, 10%, and 20% are
@@ -73,6 +87,8 @@ The independent 5-seed stability archive is kept under
 - `scripts/materialize_reviewer_experiments.py`: selected-seed reviewer table
   materialization for main, supervised LOCO, component, FuSa, and architecture
   rows.
+- `scripts/materialize_missing_comparison_experiments.py`: additional
+  reviewer-facing structural proxy and rank-fusion comparison baselines.
 - `scripts/build_rank_diagnostics.py`: rank-space Taylor diagnostics and
   budgeted-gain distribution data for Fig. 4/5.
 - `scripts/epfl_random_vector_helpers.py`: shared EPFL random-vector evaluation

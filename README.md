@@ -59,6 +59,50 @@ The independent 5-seed stability archive is kept under
      over 60 circuit-budget rows, bootstrap 95% CI
      `[0.04699510578742317, 0.10982312964562949]`.
 
+4. `analysis/v38_supplemental_selector_scoap_seed7089_20260602_01/`
+   - Supplemental SCOAP-style testability variants and selector-family
+     diagnostic sweep on EPFL20, seed `7089`, 128 vectors, and the same 5%,
+     10%, and 20% prefix budgets.
+   - The SCOAP-style rankings are computed from the gate-level `_fi.v` netlists
+     before FI counts are opened. They are distinct from the earlier
+     `scoap_proxy` row.
+   - `standard_scoap_testability` is retained as the optimistic
+     `scoap_min_fault_cost` compatibility row: macro ideal ratio
+     `0.774437099151547`, with `15` loss rows and `3` random-gate failures.
+   - Stricter SCOAP-style variants are also reported:
+     `scoap_avg_fault_cost` has macro ideal ratio `0.759505251052235`,
+     `16` loss rows, and `3` random-gate failures; `scoap_worst_fault_cost`
+     has macro ideal ratio `0.6973168714021589`, `25` loss rows, and `3`
+     random-gate failures.
+   - The observability-only diagnostic remains strong:
+     `scoap_co_only` has macro ideal ratio `0.7837097153781725`, `12` loss
+     rows, and `2` random-gate failures, confirming that this task is highly
+     sensitive to output observability.
+   - SEGR on the same table remains `0.8143664407170059`, with `0` loss rows
+     and `0` random-gate failures.
+   - The selector-family sweep evaluates 29 fixed runtime-visible candidate
+     families per circuit as a diagnostic only. It is not used to retune SEGR
+     or choose a post-hoc family.
+
+5. `analysis/v38_weighted_supplemental_tables_20260603_01/`
+   - Paper-facing supplemental evidence tables with EPFL20 eligible-node
+     weighted ideal ratios.
+   - RV-count sensitivity includes complete EPFL20 rows for 32, 64, 128, and
+     256 vectors with the selector frozen.
+   - The 256-vector row is materialized through candidate-node sharding and
+     merge: shards are evaluated independently, merged into one fault-count
+     table per circuit, and only then used for oracle/static/SEGR metrics.
+   - Standard SCOAP/CO rows are summarized in both circuit-macro and
+     eligible-node-weighted form.
+   - Runtime/scaling cost reports feature/load time, GNN time, selector/rank
+     time, and total selector-path wall time from the runtime-no-FI trace.
+   - Absolute-count reporting gives `H_method`, `H_static`, and oracle count
+     `O` by budget, with oracle-count-weighted ratios.
+
+6. `analysis/v38_vector_count_sensitivity_smoke_dec_32_seed7089_20260602_01/`
+   - Smoke/protocol check for the vector-count sensitivity workflow on `dec`
+     with 32 vectors and seed `7089`.
+
 ## Method/Protocol Notes
 
 - One global GNN ranking is fixed per circuit; budgets 5%, 10%, and 20% are
@@ -84,11 +128,20 @@ The independent 5-seed stability archive is kept under
 - `scripts/run_epfl20_vector_stability.py`: EPFL20 random-vector stability
   evaluation.
 - `scripts/merge_epfl_vector_count_shards.py`: shard validation/merge helper.
+- `scripts/run_epfl20_vector_count_shard.py`: candidate-node shard worker for
+  long EPFL random-vector count runs.
+- `scripts/run_epfl20_vector_sharded_sensitivity.py`: parallel candidate-shard
+  scheduler and aggregate table builder for high-vector-count EPFL runs.
 - `scripts/materialize_reviewer_experiments.py`: selected-seed reviewer table
   materialization for main, supervised LOCO, component, FuSa, and architecture
   rows.
 - `scripts/materialize_missing_comparison_experiments.py`: additional
   reviewer-facing structural proxy and rank-fusion comparison baselines.
+- `scripts/materialize_supplemental_experiments.py`: supplemental standard
+  SCOAP-style baseline and selector-family diagnostic tables.
+- `scripts/summarize_weighted_supplemental_evidence.py`: materializes
+  eligible-node-weighted, oracle-count-weighted, runtime, and RV-count
+  supplemental paper tables from existing result artifacts.
 - `scripts/build_rank_diagnostics.py`: rank-space Taylor diagnostics and
   budgeted-gain distribution data for Fig. 4/5.
 - `scripts/epfl_random_vector_helpers.py`: shared EPFL random-vector evaluation
@@ -112,11 +165,11 @@ From the package root:
 
 ```powershell
 python -m pytest tests -q
-python -m py_compile standalone\global_rank.py standalone\run_epfl20.py scripts\run_epfl20_vector_stability.py scripts\run_iscas85_89_main.py scripts\materialize_reviewer_experiments.py scripts\build_rank_diagnostics.py scripts\epfl_random_vector_helpers.py
+python -m py_compile standalone\global_rank.py standalone\run_epfl20.py scripts\run_epfl20_vector_stability.py scripts\run_epfl20_vector_count_shard.py scripts\run_epfl20_vector_sharded_sensitivity.py scripts\run_iscas85_89_main.py scripts\materialize_reviewer_experiments.py scripts\materialize_supplemental_experiments.py scripts\summarize_weighted_supplemental_evidence.py scripts\build_rank_diagnostics.py scripts\epfl_random_vector_helpers.py
 ```
 
 Expected test result:
 
 ```text
-21 passed
+27 passed
 ```

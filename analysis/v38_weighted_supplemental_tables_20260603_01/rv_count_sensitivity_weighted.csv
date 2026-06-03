@@ -1,0 +1,5 @@
+vectors,status,circuits,macro_ideal_ratio,node_weighted_ideal_ratio,loss_rows,random_failures,eligible_nodes,source_dir
+32,complete,20,0.8026727240782126,0.7735446610943604,1,0,461734,v38_vector_count_sensitivity_32_seed7089_20260603_01
+64,complete,20,0.8141195459819297,0.7887473421657086,0,0,461734,v38_vector_count_sensitivity_64_seed7089_20260603_01
+128,complete,20,0.8143664407170059,0.7796872315088174,0,0,461734,v38_single_seed_main_7089_20260526_01
+256,complete,20,0.8169830928877964,0.7871452689216595,0,0,461734,v38_vector_count_sensitivity_256_seed7089_20260603_02

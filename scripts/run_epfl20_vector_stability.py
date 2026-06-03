@@ -440,6 +440,38 @@ def input_masks_for_seed(input_count: int, vectors: int, seed: int) -> tuple[np.
     return lo, hi
 
 
+def input_masks_for_seed_chunks(
+    input_count: int,
+    vectors: int,
+    seed: int,
+    chunk_size: int = 128,
+) -> list[tuple[int, np.ndarray, np.ndarray]]:
+    rng = np.random.default_rng(seed)
+    chunks = [
+        (
+            offset,
+            min(int(chunk_size), int(vectors) - offset),
+            np.zeros(input_count, dtype=np.uint64),
+            np.zeros(input_count, dtype=np.uint64),
+        )
+        for offset in range(0, int(vectors), int(chunk_size))
+    ]
+    for pos in range(input_count):
+        bits = rng.integers(0, 2, size=int(vectors), dtype=np.int8)
+        for offset, width, lo, hi in chunks:
+            lo_val = 0
+            hi_val = 0
+            for bit_index in range(width):
+                if int(bits[offset + bit_index]):
+                    if bit_index < 64:
+                        lo_val |= 1 << bit_index
+                    else:
+                        hi_val |= 1 << (bit_index - 64)
+            lo[pos] = np.uint64(lo_val)
+            hi[pos] = np.uint64(hi_val)
+    return [(width, lo, hi) for _offset, width, lo, hi in chunks]
+
+
 if njit is not None:
     @njit(cache=True)
     def _popcount64(x: np.uint64) -> int:
@@ -737,44 +769,82 @@ if njit is not None:
 def simulate_fault_counts_numba(circuit: NumbaCircuit, vectors: int, seed: int) -> dict[str, int]:
     if njit is None:
         raise RuntimeError("numba is not available")
-    input_lo, input_hi = input_masks_for_seed(len(circuit.input_indices), vectors, seed)
-    counts = _simulate_counts_numba(
-        int(vectors),
-        circuit.input_indices,
-        input_lo,
-        input_hi,
-        circuit.gate_op,
-        circuit.gate_out,
-        circuit.gate_a,
-        circuit.gate_b,
-        circuit.succ_start,
-        circuit.succ_edges,
-        circuit.candidate_indices,
-        circuit.observed,
-        int(circuit.net_count),
-    )
+    if int(vectors) <= 128:
+        input_lo, input_hi = input_masks_for_seed(len(circuit.input_indices), vectors, seed)
+        counts = _simulate_counts_numba(
+            int(vectors),
+            circuit.input_indices,
+            input_lo,
+            input_hi,
+            circuit.gate_op,
+            circuit.gate_out,
+            circuit.gate_a,
+            circuit.gate_b,
+            circuit.succ_start,
+            circuit.succ_edges,
+            circuit.candidate_indices,
+            circuit.observed,
+            int(circuit.net_count),
+        )
+    else:
+        counts = np.zeros(len(circuit.candidate_indices), dtype=np.int64)
+        for width, input_lo, input_hi in input_masks_for_seed_chunks(len(circuit.input_indices), vectors, seed):
+            counts += _simulate_counts_numba(
+                int(width),
+                circuit.input_indices,
+                input_lo,
+                input_hi,
+                circuit.gate_op,
+                circuit.gate_out,
+                circuit.gate_a,
+                circuit.gate_b,
+                circuit.succ_start,
+                circuit.succ_edges,
+                circuit.candidate_indices,
+                circuit.observed,
+                int(circuit.net_count),
+            )
     return {name: int(counts[pos]) for pos, name in enumerate(circuit.candidate_names) if int(counts[pos]) != 0}
 
 
 def simulate_fault_counts_numba_opposite(circuit: NumbaCircuit, vectors: int, seed: int) -> dict[str, int]:
     if njit is None:
         raise RuntimeError("numba is not available")
-    input_lo, input_hi = input_masks_for_seed(len(circuit.input_indices), vectors, seed)
-    counts = _simulate_counts_numba_opposite(
-        int(vectors),
-        circuit.input_indices,
-        input_lo,
-        input_hi,
-        circuit.gate_op,
-        circuit.gate_out,
-        circuit.gate_a,
-        circuit.gate_b,
-        circuit.succ_start,
-        circuit.succ_edges,
-        circuit.candidate_indices,
-        circuit.observed,
-        int(circuit.net_count),
-    )
+    if int(vectors) <= 128:
+        input_lo, input_hi = input_masks_for_seed(len(circuit.input_indices), vectors, seed)
+        counts = _simulate_counts_numba_opposite(
+            int(vectors),
+            circuit.input_indices,
+            input_lo,
+            input_hi,
+            circuit.gate_op,
+            circuit.gate_out,
+            circuit.gate_a,
+            circuit.gate_b,
+            circuit.succ_start,
+            circuit.succ_edges,
+            circuit.candidate_indices,
+            circuit.observed,
+            int(circuit.net_count),
+        )
+    else:
+        counts = np.zeros(len(circuit.candidate_indices), dtype=np.int64)
+        for width, input_lo, input_hi in input_masks_for_seed_chunks(len(circuit.input_indices), vectors, seed):
+            counts += _simulate_counts_numba_opposite(
+                int(width),
+                circuit.input_indices,
+                input_lo,
+                input_hi,
+                circuit.gate_op,
+                circuit.gate_out,
+                circuit.gate_a,
+                circuit.gate_b,
+                circuit.succ_start,
+                circuit.succ_edges,
+                circuit.candidate_indices,
+                circuit.observed,
+                int(circuit.net_count),
+            )
     return {name: int(counts[pos]) for pos, name in enumerate(circuit.candidate_names) if int(counts[pos]) != 0}
 
 

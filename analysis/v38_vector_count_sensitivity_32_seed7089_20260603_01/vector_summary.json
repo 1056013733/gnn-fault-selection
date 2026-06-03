@@ -1,0 +1,18 @@
+{
+  "suite": "epfl20",
+  "protocol": "epfl_gate_level_random_vector_stuck_at",
+  "protocol_note": "Protocol matches the ISCAS'85 vector-stability check: for each vector seed, generate the same fixed number of random PI vectors, recompute stuck-at fault counts, keep one circuit-level global ranking fixed, and evaluate budget prefixes offline. The default seed mode runs repeated seeds separately; the optional batched mode packs seeds into independent bit lanes as a mathematical equivalence probe. FI/oracle are not runtime selector inputs.",
+  "circuits": 20,
+  "seeds": 1,
+  "vectors": 32,
+  "seed_eval_mode": "separate",
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "macro_mean_over_seeds": 0.8026727240782126,
+  "macro_std_over_seeds": 0.0,
+  "macro_min_over_seeds": 0.8026727240782126,
+  "macro_max_over_seeds": 0.8026727240782126,
+  "loss_rows_total": 1,
+  "random_gate_fail_total": 0,
+  "runtime_total_seconds": 5418.7334692
+}

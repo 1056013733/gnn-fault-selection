@@ -1,0 +1,12 @@
+{
+  "out_dir": "analysis\\v38_weighted_supplemental_tables_20260603_01",
+  "eligible_node_total": 461734,
+  "tables": [
+    "rv_count_sensitivity_weighted.csv",
+    "scoap_co_weighted_summary.csv",
+    "structural_proxy_weighted_summary.csv",
+    "runtime_scaling_cost.csv",
+    "absolute_count_oracle_weighted.csv",
+    "weighted_supplemental_report.md"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "suite": "epfl20",
+  "protocol": "epfl_gate_level_random_vector_stuck_at_candidate_sharded",
+  "protocol_note": "Candidate-node shards are merged before oracle, static, SEGR, and random-prefix metrics are computed.",
+  "circuits": 20,
+  "seeds": 1,
+  "vectors": 256,
+  "seed_eval_mode": "candidate_sharded",
+  "engine": "numba",
+  "count_mode": "opposite_flip",
+  "macro_mean_over_seeds": 0.8169830928877964,
+  "macro_std_over_seeds": 0.0,
+  "macro_min_over_seeds": 0.8169830928877964,
+  "macro_max_over_seeds": 0.8169830928877964,
+  "loss_rows_total": 0,
+  "random_gate_fail_total": 0,
+  "runtime_total_seconds": 176.58711560000665,
+  "workers": 4
+}

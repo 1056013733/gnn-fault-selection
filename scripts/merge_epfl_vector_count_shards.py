@@ -141,6 +141,7 @@ def main() -> int:
     parser.add_argument("--circuit", required=True)
     parser.add_argument("--vectors", type=int, default=128)
     parser.add_argument("--vector-seeds", nargs="+", type=int, default=[5089, 6089, 7089, 8089, 9089])
+    parser.add_argument("--expected-shard-count", type=int, default=None)
     parser.add_argument("--random-samples", type=int, default=1000)
     parser.add_argument("--random-seed", type=int, default=95289)
     args = parser.parse_args()
@@ -154,6 +155,10 @@ def main() -> int:
     icircuit = compile_indexed(vcircuit)
 
     shard_summaries = load_shard_summaries(args.count_root, args.circuit, int(args.vectors))
+    if args.expected_shard_count is not None:
+        shard_summaries = [
+            row for row in shard_summaries if int(row.get("shard_count", -1)) == int(args.expected_shard_count)
+        ]
     if not shard_summaries:
         raise ValueError(f"no count shards found under {args.count_root} for {args.circuit}")
 

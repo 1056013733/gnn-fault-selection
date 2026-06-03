@@ -12,17 +12,6 @@ RV-count sensitivity reports complete EPFL20 rows for 32, 64, 128, and 256 vecto
 | 128 | complete | 20 | 0.8144 | 0.7797 | 0 | 0 |
 | 256 | complete | 20 | 0.8170 | 0.7871 | 0 | 0 |
 
-## Standard SCOAP / CO Baseline
-
-| method | macro_ideal_ratio | node_weighted_ideal_ratio | loss_rows | random_failures |
-| --- | --- | --- | --- | --- |
-| scoap_avg_fault_cost | 0.7595 | 0.4663 | 16 | 3 |
-| scoap_co_only | 0.7837 | 0.4839 | 12 | 2 |
-| scoap_min_fault_cost | 0.7744 | 0.4749 | 15 | 3 |
-| scoap_worst_fault_cost | 0.6973 | 0.4352 | 25 | 3 |
-| segr_structure_derived_selector | 0.8144 | 0.7797 | 0 | 0 |
-| standard_scoap_testability | 0.7744 | 0.4749 | 15 | 3 |
-
 ## Runtime / Scaling Cost
 
 | component | sum_seconds | mean_seconds_per_circuit | node_weighted_mean_seconds | max_seconds |
@@ -36,12 +25,6 @@ RV-count sensitivity reports complete EPFL20 rows for 32, 64, 128, and 256 vecto
 
 | method | budget | H_method | H_static | O | oracle_count_weighted_ideal_ratio |
 | --- | --- | --- | --- | --- | --- |
-| scoap_co_only | 0.05 | 1082313.0000 | 1380042.0000 | 2412643.0000 | 0.4486 |
-| scoap_co_only | 0.1 | 1866024.0000 | 2073823.0000 | 4414693.0000 | 0.4227 |
-| scoap_co_only | 0.2 | 3140141.0000 | 3045338.0000 | 7685130.0000 | 0.4086 |
 | segr_structure_derived_selector | 0.05 | 1954938.0000 | 1380042.0000 | 2412643.0000 | 0.8103 |
 | segr_structure_derived_selector | 0.1 | 3537609.0000 | 2073823.0000 | 4414693.0000 | 0.8013 |
 | segr_structure_derived_selector | 0.2 | 5639681.0000 | 3045338.0000 | 7685130.0000 | 0.7338 |
-| standard_scoap_testability | 0.05 | 1053603.0000 | 1380042.0000 | 2412643.0000 | 0.4367 |
-| standard_scoap_testability | 0.1 | 1835824.0000 | 2073823.0000 | 4414693.0000 | 0.4158 |
-| standard_scoap_testability | 0.2 | 3106023.0000 | 3045338.0000 | 7685130.0000 | 0.4042 |

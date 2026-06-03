@@ -234,15 +234,6 @@ def build_rankings(data: Any, debug_rows: list[dict[str, str]]) -> dict[str, lis
             families.get("eigen", {}),
         ],
     )
-    scoap_proxy_scores = average_rank_score(
-        names,
-        [
-            families.get("dist_min_inv", {}),
-            families.get("dist_avg_inv", {}),
-            families.get("inv_depth", {}),
-            families.get("reconv", {}),
-        ],
-    )
     observability_cone_scores = average_rank_score(
         names,
         [
@@ -258,7 +249,6 @@ def build_rankings(data: Any, debug_rows: list[dict[str, str]]) -> dict[str, lis
             static_scores,
             cache_scores,
             centrality_scores,
-            scoap_proxy_scores,
             observability_cone_scores,
         ],
     )
@@ -290,7 +280,6 @@ def build_rankings(data: Any, debug_rows: list[dict[str, str]]) -> dict[str, lis
 
     score_by_method = {
         "centrality_only": centrality_scores,
-        "scoap_proxy": scoap_proxy_scores,
         "observability_cone_proxy": observability_cone_scores,
         "cone_centrality_proxy": cone_centrality_scores,
         "structural_borda_no_gnn": structural_borda_scores,
@@ -350,7 +339,7 @@ def write_report(path: Path, summary: list[dict[str, Any]], paired: list[dict[st
         "These rows supplement reviewer-requested comparison baselines without changing the SEGR ranking path.",
         "All methods produce one fixed target-circuit order before FI counts, RV-Oracle counts, random-vector outcomes, held-out labels, or evaluation metrics are opened.",
         "",
-        "The SCOAP/testability and observability rows are explicitly reported as runtime-visible structural proxies, not as independent commercial-tool SCOAP measurements.",
+        "The observability rows are runtime-visible structural proxies rather than external tool measurements.",
         "",
         "## Method Summary",
         "",
@@ -441,10 +430,9 @@ def main() -> None:
         ],
         "method_definitions": {
             "centrality_only": "average ranks of PageRank, betweenness, and eigenvector centrality features",
-            "scoap_proxy": "runtime-visible proxy over inverse output distance, inverse depth, and reconvergence features; not external SCOAP",
             "observability_cone_proxy": "runtime-visible proxy over sink-nearness, pdom-distance, distance-PageRank, and sink-reach-near PageRank features",
             "cone_centrality_proxy": "average ranks of centrality, observability-cone proxy, and out-degree",
-            "structural_borda_no_gnn": "Borda-style average of static proximity, cache structure, centrality, SCOAP proxy, and observability-cone proxy; no GNN",
+            "structural_borda_no_gnn": "Borda-style average of static proximity, cache structure, centrality, and observability-cone proxy; no GNN",
             "equal_rank_fusion_static_cache_gnn": "equal rank average of static, cache, and GNN signals",
             "rrf_static_cache_gnn": "reciprocal-rank fusion over static, cache, and GNN rankings",
             "max_visible_signal": "per-node max over static, cache, and GNN rank scores",

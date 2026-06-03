@@ -28,7 +28,7 @@
     "square",
     "voter"
   ],
-  "elapsed_seconds": 216.34858140000142,
+  "elapsed_seconds": 268.07637459997204,
   "source_debug_dir": "outputs_runs\\v38_no_hand_parameters_epfl20_20260526_01\\debug",
   "count_cache_dir": "analysis\\v38_single_seed_7089_count_cache_20260526_01",
   "forbidden_inputs": [
@@ -41,10 +41,9 @@
   ],
   "method_definitions": {
     "centrality_only": "average ranks of PageRank, betweenness, and eigenvector centrality features",
-    "scoap_proxy": "runtime-visible proxy over inverse output distance, inverse depth, and reconvergence features; not external SCOAP",
     "observability_cone_proxy": "runtime-visible proxy over sink-nearness, pdom-distance, distance-PageRank, and sink-reach-near PageRank features",
     "cone_centrality_proxy": "average ranks of centrality, observability-cone proxy, and out-degree",
-    "structural_borda_no_gnn": "Borda-style average of static proximity, cache structure, centrality, SCOAP proxy, and observability-cone proxy; no GNN",
+    "structural_borda_no_gnn": "Borda-style average of static proximity, cache structure, centrality, and observability-cone proxy; no GNN",
     "equal_rank_fusion_static_cache_gnn": "equal rank average of static, cache, and GNN signals",
     "rrf_static_cache_gnn": "reciprocal-rank fusion over static, cache, and GNN rankings",
     "max_visible_signal": "per-node max over static, cache, and GNN rank scores"

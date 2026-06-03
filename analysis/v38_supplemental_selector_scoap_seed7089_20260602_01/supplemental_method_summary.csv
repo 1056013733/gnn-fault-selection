@@ -1,7 +1,0 @@
-method,circuits,macro_ideal_ratio_raw,macro_std_over_circuits,loss_rows,random_gate_fail,ideal_ratio_075_circuits
-scoap_avg_fault_cost,20,0.759505251052235,0.2144950632857797,16,3,6
-scoap_co_only,20,0.7837097153781725,0.21313374886128497,12,2,10
-scoap_min_fault_cost,20,0.774437099151547,0.21423441360095535,15,3,8
-scoap_worst_fault_cost,20,0.6973168714021589,0.2404342590496303,25,3,4
-segr_structure_derived_selector,20,0.8143664407170059,0.14689456546950286,0,0,13
-standard_scoap_testability,20,0.774437099151547,0.21423441360095535,15,3,8

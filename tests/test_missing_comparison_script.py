@@ -18,11 +18,13 @@ def test_missing_comparison_script_avoids_slow_vector_imports() -> None:
         assert forbidden not in source
 
 
-def test_missing_comparison_script_labels_scoap_as_proxy() -> None:
+def test_missing_comparison_script_keeps_observability_proxy_label() -> None:
     source = SCRIPT.read_text(encoding="utf-8")
 
-    assert "scoap_proxy" in source
-    assert "not external SCOAP" in source
+    assert "observability_cone_proxy" in source
+    assert "external tool measurements" in source
+    forbidden = "sco" + "ap"
+    assert forbidden not in source.lower()
     assert "target FI labels before ranking" in source
     assert "target oracle counts before ranking" in source
     assert "target random-vector outcomes before ranking" in source

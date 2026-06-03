@@ -224,22 +224,17 @@ def main() -> int:
         summarize_vector_dir(root, "v38_vector_count_sensitivity_256_seed7089_20260603_02", 256, weights),
     ]
 
-    scoap_rows = summarize_circuit_methods(
-        read_csv(root / "analysis/v38_supplemental_selector_scoap_seed7089_20260602_01/supplemental_circuits.csv"),
-        weights,
-    )
     comparison_rows = summarize_circuit_methods(
         read_csv(root / "analysis/v38_missing_comparison_baselines_seed7089_20260602_01/comparison_circuits.csv"),
         weights,
     )
     runtime_rows = summarize_runtime(root / "outputs_runs/v38_runtime_no_fi_epfl20_20260601_01/perf.csv", weights)
     absolute_rows = summarize_absolute_counts(
-        [root / "analysis/v38_supplemental_selector_scoap_seed7089_20260602_01/supplemental_rows.csv"],
-        "epfl20_seed7089_128rv_scoap_supplemental",
+        [root / "analysis/v38_single_seed_main_7089_20260526_01/main_seed_rows.csv"],
+        "epfl20_seed7089_128rv_main",
     )
 
     write_csv(out_dir / "rv_count_sensitivity_weighted.csv", vector_rows)
-    write_csv(out_dir / "scoap_co_weighted_summary.csv", scoap_rows)
     write_csv(out_dir / "structural_proxy_weighted_summary.csv", comparison_rows)
     write_csv(out_dir / "runtime_scaling_cost.csv", runtime_rows)
     write_csv(out_dir / "absolute_count_oracle_weighted.csv", absolute_rows)
@@ -265,25 +260,6 @@ def main() -> int:
             ],
         ),
         "",
-        "## Standard SCOAP / CO Baseline",
-        "",
-        *markdown_table(
-            [
-                row
-                for row in scoap_rows
-                if row["method"]
-                in {
-                    "segr_structure_derived_selector",
-                    "standard_scoap_testability",
-                    "scoap_co_only",
-                    "scoap_min_fault_cost",
-                    "scoap_avg_fault_cost",
-                    "scoap_worst_fault_cost",
-                }
-            ],
-            ["method", "macro_ideal_ratio", "node_weighted_ideal_ratio", "loss_rows", "random_failures"],
-        ),
-        "",
         "## Runtime / Scaling Cost",
         "",
         *markdown_table(runtime_rows, ["component", "sum_seconds", "mean_seconds_per_circuit", "node_weighted_mean_seconds", "max_seconds"]),
@@ -294,7 +270,7 @@ def main() -> int:
             [
                 row
                 for row in absolute_rows
-                if row["method"] in {"segr_structure_derived_selector", "standard_scoap_testability", "scoap_co_only"}
+                if row["method"] == "segr_structure_derived_selector"
             ],
             ["method", "budget", "H_method", "H_static", "O", "oracle_count_weighted_ideal_ratio"],
         ),
@@ -306,7 +282,6 @@ def main() -> int:
         "eligible_node_total": int(sum(weights.values())),
         "tables": [
             "rv_count_sensitivity_weighted.csv",
-            "scoap_co_weighted_summary.csv",
             "structural_proxy_weighted_summary.csv",
             "runtime_scaling_cost.csv",
             "absolute_count_oracle_weighted.csv",

@@ -28,7 +28,7 @@
     "square",
     "voter"
   ],
-  "elapsed_seconds": 268.07637459997204,
+  "elapsed_seconds": 191.37977020000108,
   "source_debug_dir": "outputs_runs\\v38_no_hand_parameters_epfl20_20260526_01\\debug",
   "count_cache_dir": "analysis\\v38_single_seed_7089_count_cache_20260526_01",
   "forbidden_inputs": [
@@ -40,6 +40,7 @@
     "evaluation metrics before ranking"
   ],
   "method_definitions": {
+    "co_only_observability": "output-observability-only ranking from the gate-level netlist; same cost propagation as the prior CO-only baseline, without controllability/fault-cost variants",
     "centrality_only": "average ranks of PageRank, betweenness, and eigenvector centrality features",
     "observability_cone_proxy": "runtime-visible proxy over sink-nearness, pdom-distance, distance-PageRank, and sink-reach-near PageRank features",
     "cone_centrality_proxy": "average ranks of centrality, observability-cone proxy, and out-degree",

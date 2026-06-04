@@ -22,6 +22,7 @@ def test_missing_comparison_script_keeps_observability_proxy_label() -> None:
     source = SCRIPT.read_text(encoding="utf-8")
 
     assert "observability_cone_proxy" in source
+    assert "co_only_observability" in source
     assert "external tool measurements" in source
     forbidden = "sco" + "ap"
     assert forbidden not in source.lower()

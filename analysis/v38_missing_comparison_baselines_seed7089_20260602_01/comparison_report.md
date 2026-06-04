@@ -10,6 +10,7 @@ The observability rows are runtime-visible structural proxies rather than extern
 | Method | Circuits | Macro ideal | Loss rows | Random gate fails | >=0.75 no-loss circuits |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | centrality_only | 20 | 0.4300 | 38 | 15 | 3 |
+| co_only_observability | 20 | 0.7837 | 12 | 2 | 10 |
 | cone_centrality_proxy | 20 | 0.5647 | 35 | 8 | 4 |
 | equal_rank_fusion_static_cache_gnn | 20 | 0.6103 | 32 | 6 | 3 |
 | max_visible_signal | 20 | 0.5206 | 34 | 10 | 3 |
@@ -28,3 +29,4 @@ The observability rows are runtime-visible structural proxies rather than extern
 | observability_cone_proxy | 60 | 0.0961 | [0.0617, 0.1330] | 40 | 13 | 7 |
 | rrf_static_cache_gnn | 60 | 0.2036 | [0.1696, 0.2391] | 57 | 0 | 3 |
 | structural_borda_no_gnn | 60 | 0.2362 | [0.1832, 0.2927] | 52 | 5 | 3 |
+| co_only_observability | 60 | 0.0307 | [-0.0194, 0.0814] | 30 | 21 | 9 |

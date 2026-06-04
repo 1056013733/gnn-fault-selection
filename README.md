@@ -48,16 +48,17 @@ The independent 5-seed stability archive is kept under
 3. `analysis/v38_missing_comparison_baselines_seed7089_20260602_01/`
    - Additional reviewer-facing comparison baselines on EPFL20, seed `7089`,
      128 vectors, and the same 5%, 10%, and 20% prefix budgets.
-   - Includes centrality-only, observability/cone proxy, structural Borda
-     without GNN, and simple static/cache/GNN rank fusion rows.
-   - The observability rows are runtime-visible structural proxies rather than
-     external tool measurements.
-   - Strongest proxy row: `observability_cone_proxy`, macro ideal ratio
-     `0.7183043096482145`.
-   - SEGR paired advantage over `observability_cone_proxy`: mean delta
-     `0.09606213106879143`
+   - Includes centrality-only, CO-only observability, observability/cone proxy,
+     structural Borda without GNN, and simple static/cache/GNN rank fusion rows.
+   - The CO-only observability row uses the same gate-level observability-cost
+     propagation as the earlier CO-only baseline, but excludes controllability
+     and fault-cost variants.
+   - Strongest comparison row: `co_only_observability`, macro ideal ratio
+     `0.7837097153781725`, node-weighted ideal ratio `0.48391822152255376`.
+   - SEGR paired advantage over `co_only_observability`: mean delta
+     `0.030656725338833398`
      over 60 circuit-budget rows, bootstrap 95% CI
-     `[0.06173504100600029, 0.1329881743749203]`.
+     `[-0.020403811889959458, 0.08166904288966835]`.
 
 4. `analysis/v38_weighted_supplemental_tables_20260603_01/`
    - Paper-facing supplemental evidence tables with EPFL20 eligible-node

@@ -5,11 +5,13 @@ import argparse
 import csv
 import json
 import math
+import re
 import sys
 import time
+from collections import defaultdict
 from pathlib import Path
 from statistics import mean, pstdev
-from typing import Any
+from typing import Any, NamedTuple
 
 import numpy as np
 
@@ -23,6 +25,14 @@ from standalone.structural_features import build_structural_families  # noqa: E4
 METHOD_DEFAULT = "segr_structure_derived_selector"
 BUDGETS = [0.05, 0.10, 0.20]
 EPS = 1e-9
+INF = 1.0e9
+SUPPORTED_CELLS = {"AND2", "AND2B", "BUF", "INV", "NAND2", "NOR2", "OR2", "OR2B", "TIEHI", "TIELO"}
+
+
+class Gate(NamedTuple):
+    op: str
+    out: str
+    ins: tuple[str, ...]
 
 
 def ensure_dir(path: Path) -> Path:
@@ -41,6 +51,143 @@ def read_json(path: Path) -> dict[str, Any]:
 
 def load_counts(path: Path) -> dict[str, int]:
     return {row["node"]: int(float(row.get("count", 0) or 0)) for row in read_csv(path)}
+
+
+def normalize_name(token: str) -> str:
+    item = token.strip()
+    if item.startswith("\\"):
+        item = item[1:].strip()
+    if item.endswith("_fi_orig"):
+        item = item[: -len("_fi_orig")]
+    return item.strip()
+
+
+def expand_bus_names(names: list[str], left: int, right: int) -> list[str]:
+    lo = min(left, right)
+    hi = max(left, right)
+    out: list[str] = []
+    for name in names:
+        if "[" in name:
+            out.append(name)
+        else:
+            out.extend(f"{name}[{idx}]" for idx in range(lo, hi + 1))
+    return out
+
+
+def split_decl_names(text: str) -> list[str]:
+    text = re.sub(r"\b(?:wire|reg|logic|signed)\b", " ", text)
+    bus = re.search(r"\[\s*(\d+)\s*:\s*(\d+)\s*\]", text)
+    bus_range: tuple[int, int] | None = None
+    if bus:
+        bus_range = (int(bus.group(1)), int(bus.group(2)))
+        text = f"{text[:bus.start()]} {text[bus.end():]}"
+    out = [normalize_name(raw) for raw in text.split(",")]
+    out = [name for name in out if name]
+    if bus_range is not None:
+        out = expand_bus_names(out, bus_range[0], bus_range[1])
+    return out
+
+
+def parse_ports(verilog: str, keyword: str) -> list[str]:
+    names: list[str] = []
+    for match in re.finditer(rf"\b{keyword}\b\s+([^;]+);", verilog, flags=re.S):
+        names.extend(split_decl_names(match.group(1)))
+    return list(dict.fromkeys(names))
+
+
+def parse_gate_line(line: str) -> Gate | None:
+    match = re.match(r"\s*([A-Za-z0-9]+)\s+[A-Za-z0-9_]+\s*\((.*)\)\s*;", line)
+    if not match:
+        return None
+    op = match.group(1)
+    if op not in SUPPORTED_CELLS:
+        return None
+    pins = {pin: normalize_name(value) for pin, value in re.findall(r"\.([A-Za-z0-9_]+)\((.*?)\)", match.group(2))}
+    out = pins.get("Y")
+    if not out:
+        return None
+    return Gate(op=op, out=out, ins=tuple(pins[p] for p in ("A", "B", "C", "D") if p in pins))
+
+
+def parse_gate_level_verilog(path: Path) -> tuple[list[str], list[str], list[Gate]]:
+    verilog = path.read_text(encoding="utf-8", errors="ignore")
+    inputs = parse_ports(verilog, "input")
+    outputs = parse_ports(verilog, "output")
+    gates = [gate for line in verilog.splitlines() if (gate := parse_gate_line(line)) is not None]
+    if not inputs or not outputs or not gates:
+        raise ValueError(f"failed to parse gate-level netlist: {path}")
+    return inputs, outputs, gates
+
+
+def fi_verilog_path(root: Path, fi_root: str, circuit: str) -> Path:
+    base = root / fi_root / circuit
+    path = base / f"{circuit}_fi.v"
+    if path.exists():
+        return path
+    matches = sorted(base.glob("*_fi.v"))
+    if not matches:
+        raise FileNotFoundError(f"missing *_fi.v for {circuit}")
+    return matches[0]
+
+
+def co_only_observability_scores(
+    candidates: list[str],
+    inputs: list[str],
+    outputs: list[str],
+    gates: list[Gate],
+) -> dict[str, float]:
+    cc0: dict[str, float] = {name: 1.0 for name in inputs}
+    cc1: dict[str, float] = {name: 1.0 for name in inputs}
+    for gate in gates:
+        vals0 = [cc0.get(name, INF) for name in gate.ins]
+        vals1 = [cc1.get(name, INF) for name in gate.ins]
+        if gate.op == "TIEHI":
+            cc0[gate.out], cc1[gate.out] = INF, 1.0
+        elif gate.op == "TIELO":
+            cc0[gate.out], cc1[gate.out] = 1.0, INF
+        elif gate.op == "BUF":
+            cc0[gate.out], cc1[gate.out] = vals0[0] + 1.0, vals1[0] + 1.0
+        elif gate.op == "INV":
+            cc0[gate.out], cc1[gate.out] = vals1[0] + 1.0, vals0[0] + 1.0
+        elif gate.op == "AND2":
+            cc0[gate.out], cc1[gate.out] = min(vals0) + 1.0, sum(vals1) + 1.0
+        elif gate.op == "NAND2":
+            cc0[gate.out], cc1[gate.out] = sum(vals1) + 1.0, min(vals0) + 1.0
+        elif gate.op == "OR2":
+            cc0[gate.out], cc1[gate.out] = sum(vals0) + 1.0, min(vals1) + 1.0
+        elif gate.op == "NOR2":
+            cc0[gate.out], cc1[gate.out] = min(vals1) + 1.0, sum(vals0) + 1.0
+        elif gate.op == "AND2B":
+            cc0[gate.out], cc1[gate.out] = min(vals0[0], vals1[1]) + 1.0, vals1[0] + vals0[1] + 1.0
+        elif gate.op == "OR2B":
+            cc0[gate.out], cc1[gate.out] = vals0[0] + vals1[1] + 1.0, min(vals1[0], vals0[1]) + 1.0
+
+    co: dict[str, float] = defaultdict(lambda: INF)
+    for name in outputs:
+        co[name] = 0.0
+    for gate in reversed(gates):
+        out_co = co[gate.out]
+        if out_co >= INF:
+            continue
+        vals0 = [cc0.get(name, INF) for name in gate.ins]
+        vals1 = [cc1.get(name, INF) for name in gate.ins]
+        for idx, name in enumerate(gate.ins):
+            others = [j for j in range(len(gate.ins)) if j != idx]
+            if gate.op in {"BUF", "INV"}:
+                required = 0.0
+            elif gate.op in {"AND2", "NAND2"}:
+                required = sum(vals1[j] for j in others)
+            elif gate.op in {"OR2", "NOR2"}:
+                required = sum(vals0[j] for j in others)
+            elif gate.op == "AND2B":
+                required = vals0[1] if idx == 0 else vals1[0]
+            elif gate.op == "OR2B":
+                required = vals1[1] if idx == 0 else vals0[0]
+            else:
+                required = 0.0
+            co[name] = min(co[name], out_co + required + 1.0)
+
+    return {name: 1.0 / (1.0 + co[name]) if co[name] < INF else 0.0 for name in candidates}
 
 
 def stable_static_order(data: Any) -> list[str]:
@@ -301,7 +448,11 @@ def paired_stats(segr_rows: list[dict[str, Any]], comparison_rows: list[dict[str
 
     out: list[dict[str, Any]] = []
     rng = np.random.default_rng(20260602)
-    for method, rows in sorted(by_method.items()):
+    ordered_methods = sorted(method for method in by_method if method != "co_only_observability")
+    if "co_only_observability" in by_method:
+        ordered_methods.append("co_only_observability")
+    for method in ordered_methods:
+        rows = by_method[method]
         deltas = []
         for row in rows:
             key = (str(row["circuit"]), float(row["budget"]))
@@ -405,7 +556,13 @@ def main() -> None:
             row["chosen_family"] = chosen_family
         segr_rows.extend(detail)
 
-        for method, ranking in build_rankings(data, debug_rows).items():
+        rankings = build_rankings(data, debug_rows)
+        inputs, outputs, gates = parse_gate_level_verilog(fi_verilog_path(args.root, args.fi_root, circuit))
+        rankings["co_only_observability"] = score_rank(
+            data.node_names,
+            co_only_observability_scores(data.node_names, inputs, outputs, gates),
+        )
+        for method, ranking in rankings.items():
             detail, summary = eval_rank(circuit, method, ranking, static_order, counts, data.node_names, args)
             rows.extend(detail)
             circuits.append(summary)
@@ -429,6 +586,7 @@ def main() -> None:
             "evaluation metrics before ranking",
         ],
         "method_definitions": {
+            "co_only_observability": "output-observability-only ranking from the gate-level netlist; same cost propagation as the prior CO-only baseline, without controllability/fault-cost variants",
             "centrality_only": "average ranks of PageRank, betweenness, and eigenvector centrality features",
             "observability_cone_proxy": "runtime-visible proxy over sink-nearness, pdom-distance, distance-PageRank, and sink-reach-near PageRank features",
             "cone_centrality_proxy": "average ranks of centrality, observability-cone proxy, and out-degree",

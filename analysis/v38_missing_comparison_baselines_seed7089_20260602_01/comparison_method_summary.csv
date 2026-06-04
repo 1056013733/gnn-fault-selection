@@ -1,5 +1,6 @@
 method,circuits,macro_ideal_ratio_raw,macro_std_over_circuits,loss_rows,random_gate_fail,ideal_ratio_075_circuits
 centrality_only,20,0.4300348133577396,0.2559763920382866,38,15,3
+co_only_observability,20,0.7837097153781725,0.21313374886128497,12,2,10
 cone_centrality_proxy,20,0.5646749761375724,0.22846425994696584,35,8,4
 equal_rank_fusion_static_cache_gnn,20,0.610273240285104,0.20120173859512555,32,6,3
 max_visible_signal,20,0.5206166302873906,0.27059626632866374,34,10,3
